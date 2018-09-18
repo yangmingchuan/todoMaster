@@ -58,6 +58,50 @@ object JumpUtil {
         context.startActivity(mIntent,option)
     }
 
+    /**
+     * 带参数及 flag 共享元素跳转
+     */
+    fun overlay(context: Context, targetClazz: Class<out Activity>, bundle: Bundle?, flags: Int?) {
+        val mIntent = Intent(context, targetClazz)
+        if (bundle != null) {
+            mIntent.putExtras(bundle)
+        }
+        if (flags != null) {
+            mIntent.flags = flags
+        }
+        context.startActivity(mIntent)
+    }
 
+    /**
+     * 界面跳转带 result
+     *
+     * @param context
+     * @param targetClazz
+     * @param requestCode
+     * @param bundle
+     */
+    fun startForResult(context: Activity, targetClazz: Class<out Activity>, requestCode: Int, bundle: Bundle?) {
+        val mIntent = Intent(context, targetClazz)
+        if (bundle != null) {
+            mIntent.putExtras(bundle)
+        }
+        context.startActivityForResult(mIntent, requestCode)
+    }
+
+    /**
+     * fragment 界面跳转 带result
+     *
+     * @param fragment
+     * @param targetClazz
+     * @param requestCode
+     * @param bundle
+     */
+    fun startForResult(fragment: Fragment, targetClazz: Class<out Activity>, requestCode: Int, bundle: Bundle?) {
+        val mIntent = Intent(fragment.activity, targetClazz)
+        if (bundle != null) {
+            mIntent.putExtras(bundle)
+        }
+        fragment.startActivityForResult(mIntent, requestCode)
+    }
 
 }
