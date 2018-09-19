@@ -1,4 +1,4 @@
-package cn.white.ymc.todomaster.utils
+package cn.white.ymc.todomaster.utils.jump
 
 import android.app.Activity
 import android.content.Context
