@@ -23,7 +23,7 @@ class MApplication : Application() {
      * 延迟 单例 初始化
      */
     companion object {
-        val myApplication : MApplication by lazy {
+        val instance : MApplication by lazy {
             MApplication()
         }
     }

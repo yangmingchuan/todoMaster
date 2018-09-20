@@ -45,6 +45,8 @@ object ConstantUtil{
     /**
      * 用户相关 sp key
      */
+    const val SP_FILE_NAME = "todo_sp_data"
+
     const val USERNAME : String = "username"
     const val PASSWORD :String = "password"
     const val ISLOGIN :String = "is_login"
