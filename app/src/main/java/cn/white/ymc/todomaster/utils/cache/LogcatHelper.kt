@@ -17,29 +17,27 @@ import java.io.*
  * @QQ:745612618
  */
 
-class LogcatHelper {
+class LogcatHelper constructor(context: Context) {
 
     private var pathLogcat: String? = null
     private var mLogDumper: LogDumper? = null
     private var mPid: Int = 0
-    var context: Context? = null
+    var mcontext: Context? = context.applicationContext
 
-    companion object {
-        val instance: LogcatHelper by lazy {
-            LogcatHelper()
-        }
+    val instance: LogcatHelper by lazy {
+        LogcatHelper(mcontext!!)
     }
 
     init {
-        initLogcat(this.context!!)
+        initLogcat(mcontext!!)
         mPid = android.os.Process.myPid()
     }
 
     /**
      * 打开读取子线程
      */
-    fun startLogThread(){
-        if(mLogDumper !=null){
+    fun startLogThread() {
+        if (mLogDumper != null) {
             mLogDumper = LogDumper(mPid.toString(), pathLogcat!!)
         }
         mLogDumper!!.start()
@@ -48,8 +46,8 @@ class LogcatHelper {
     /**
      * 停止 子线程
      */
-    fun stopLogThread(){
-        if(mLogDumper!=null){
+    fun stopLogThread() {
+        if (mLogDumper != null) {
             mLogDumper!!.stopLogs()
             mLogDumper = null
         }
@@ -79,7 +77,7 @@ class LogcatHelper {
      * 读取线程
      * 只有主构造函数 constructor 可以省略
      */
-    private class LogDumper (pid: String, dir: String) : Thread() {
+    private class LogDumper(pid: String, dir: String) : Thread() {
         /**
          * 日志等级：*:v , *:d , *:w , *:e , *:f , *:s
          * 显示当前程序的 E 等级的日志.
@@ -127,15 +125,15 @@ class LogcatHelper {
             } catch (e: IOException) {
                 eLogger(e.localizedMessage)
             } finally {
-                if(mprocess !=null){
+                if (mprocess != null) {
                     mprocess!!.destroy()
                     mprocess = null
                 }
-                if(mReader != null){
-                    mReader !!.close()
+                if (mReader != null) {
+                    mReader!!.close()
                     mReader = null
                 }
-                if(out !=null){
+                if (out != null) {
                     out!!.close()
                     out = null
                 }

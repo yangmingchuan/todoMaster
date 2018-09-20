@@ -1,5 +1,7 @@
 package cn.white.ymc.todomaster.utils
 
+import android.widget.Toast
+
 /**
  *  String 常量类
  *
@@ -13,6 +15,8 @@ package cn.white.ymc.todomaster.utils
  */
 
 object ConstantUtil{
+
+    var toast : Toast ?= null
 
     /**
      * 访问网络 基础 url

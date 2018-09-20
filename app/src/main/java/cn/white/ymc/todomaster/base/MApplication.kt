@@ -1,12 +1,11 @@
 package cn.white.ymc.todomaster.base
 
 import android.app.Application
+import cn.white.ymc.todomaster.utils.cache.CrashHandler
 import cn.white.ymc.todomaster.utils.cache.LogcatHelper
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 import com.orhanobut.logger.PrettyFormatStrategy
-
-
 
 /**
  * application
@@ -24,7 +23,7 @@ class MApplication : Application() {
      * 延迟 单例 初始化
      */
     companion object {
-        val instance : MApplication by lazy {
+        val myApplication : MApplication by lazy {
             MApplication()
         }
     }
@@ -45,9 +44,12 @@ class MApplication : Application() {
         /**
          * 打开log 持久化
          */
-        LogcatHelper.instance.startLogThread()
+        LogcatHelper(this).instance.startLogThread()
 
-
+        /**
+         *  crash 本地持久化
+         */
+        CrashHandler(this).instance.initCarsh()
     }
 
 

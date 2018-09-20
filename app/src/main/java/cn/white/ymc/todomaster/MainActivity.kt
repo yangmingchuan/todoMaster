@@ -7,6 +7,9 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 /**
  * 首页
+ *
+ * @author ymc
+ * @data 2018年9月20日 11:27:20
  */
 class MainActivity : AppCompatActivity() {
 

@@ -20,32 +20,41 @@ import java.util.*
 
 var isShow: Boolean = true
 var isDebug: Boolean = true
-
 var appTag: String = "todo"
-
-
-/**
- * 显示toast
- */
-
-fun show(context: Context, message: CharSequence, duration: Int) {
-    if (isShow) {
-        Toast.makeText(context, message, duration).show()
-    }
-}
 
 /**
  * 显示 短 toast
+ *
+ * apply 方法内 可以调用该对象的任意方法，并返回该对象
+ * 如果左边不是空就返回左边，如果左右是空，则会继续走右边的 apply
  */
-fun showShort(context: Context, message: CharSequence) {
-    show(context, message, Toast.LENGTH_SHORT)
+fun Context.toastS( msg: CharSequence) {
+    if(isShow){
+        ConstantUtil.toast?.apply {
+            setText(msg)
+            show()
+        }?:apply {
+            Toast.makeText(this,msg,Toast.LENGTH_SHORT).apply {
+                ConstantUtil.toast = this
+            }.show()
+        }
+    }
 }
 
 /**
  * 显示 长 toast
  */
-fun showLong(context: Context, message: CharSequence) {
-    show(context, message, Toast.LENGTH_LONG)
+fun Context.ToastL(msg : CharSequence){
+    if(isShow){
+        ConstantUtil.toast?.apply {
+            setText(msg)
+            show()
+        }?:apply {
+            Toast.makeText(this,msg,Toast.LENGTH_LONG).apply {
+                ConstantUtil.toast = this
+            }.show()
+        }
+    }
 }
 
 /**
