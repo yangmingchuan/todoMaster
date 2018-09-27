@@ -21,7 +21,10 @@ import java.lang.reflect.Method
  *  通过 apply 方法的一个兼容类
  */
 class SPUtil constructor(){
+
     var sApplyMethod : Method? = findApplyMethod()
+    val sp =  MApplication.instance.getSharedPreferences(ConstantUtil.SP_FILE_NAME, Context.MODE_PRIVATE)
+    val editor = sp.edit()
 
     companion object {
         val instance: SPUtil by lazy{
@@ -52,9 +55,6 @@ class SPUtil constructor(){
      */
     @SuppressLint("CommitPrefEdits")
     fun spPutValue(key:String , value: Any){
-        val context  = MApplication.instance
-        val sp = context.getSharedPreferences(ConstantUtil.SP_FILE_NAME, Context.MODE_PRIVATE)
-        val editor = sp.edit()
         when (value) {
             is String -> editor.putString(key, value)
             is Int -> editor.putInt(key, value)
@@ -70,8 +70,6 @@ class SPUtil constructor(){
      * sp 读取
      */
     fun spGetValue(key : String , defaultValue : Any):Any?{
-        val context  = MApplication.instance
-        var sp = context.getSharedPreferences(ConstantUtil.SP_FILE_NAME, Context.MODE_PRIVATE)
         when (defaultValue){
             is String -> return sp.getString(key, defaultValue)
             is Int -> return sp.getInt(key, defaultValue)
@@ -85,9 +83,17 @@ class SPUtil constructor(){
     /**
      *  移除掉其中的一个
      */
-    fun remove (key : String){
-        val sp = MApplication.instance.getSharedPreferences(ConstantUtil.SP_FILE_NAME, Context.MODE_PRIVATE)
+    fun spRemove (key : String){
+        editor.remove(key)
+        applySp(editor)
+    }
 
+    /**
+     * 移除全部
+     */
+    fun spRemoveAll(){
+        editor.clear()
+        applySp(editor)
     }
 
 }
