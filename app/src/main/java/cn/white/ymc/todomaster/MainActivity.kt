@@ -1,8 +1,7 @@
 package cn.white.ymc.todomaster
 
-import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
-import android.support.v7.app.AppCompatActivity
+import cn.white.ymc.todomaster.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 /**
@@ -11,13 +10,17 @@ import kotlinx.android.synthetic.main.activity_main.*
  * @author ymc
  * @data 2018年9月20日 11:27:20
  */
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+    override fun getLayoutId(): Int {
+        return R.layout.activity_main
+    }
+
+    override fun initData() {
+    }
+
+    override fun initView() {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-
     }
 
     /**

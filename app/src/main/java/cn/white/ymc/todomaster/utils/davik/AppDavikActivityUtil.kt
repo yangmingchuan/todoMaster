@@ -13,7 +13,7 @@ import java.util.*
  * @QQ:745612618
  */
 
-private class AppDavikActivityUtil{
+public class AppDavikActivityUtil constructor() {
 
     /**
      * 线程安全 懒汉模式
@@ -49,14 +49,12 @@ private class AppDavikActivityUtil{
      * 第一次调用 get() 会执行已传递给 lazy() 的 lambda 表达式并记录结果，
      * 后续调用 get() 只是返回记录的结果。
      */
-    class AppDavikActivityUtil constructor(){
-        companion object {
-            val instance: AppDavikActivityUtil by lazy{
-                /**
-                 * 调用lambda 表达式并记录，以后调用只会返回 记录结果
-                 */
-                AppDavikActivityUtil()
-            }
+    companion object {
+        val instance: AppDavikActivityUtil by lazy {
+            /**
+             * 调用lambda 表达式并记录，以后调用只会返回 记录结果
+             */
+            AppDavikActivityUtil()
         }
     }
 
@@ -68,7 +66,7 @@ private class AppDavikActivityUtil{
     /**
      * 移除 当前activity
      */
-    fun removeActivity( activity : Activity?){
+    fun removeActivity(activity: Activity?) {
         var activity = activity
         if (null != activity) {
             activityStack!!.remove(activity)
@@ -79,8 +77,8 @@ private class AppDavikActivityUtil{
     /**
      * 移除所有的 activity
      */
-    fun removeAllActivity(){
-        if(null!=activityStack && activityStack!!.size >0){
+    fun removeAllActivity() {
+        if (null != activityStack && activityStack!!.size > 0) {
             activityStack!!.forEach { it.finish() }
             activityStack!!.clear()
         }
@@ -91,7 +89,7 @@ private class AppDavikActivityUtil{
     /**
      * 获取当前 activity
      */
-    fun currentActivity():Activity?{
+    fun currentActivity(): Activity? {
         var activity: Activity? = null
         if (!activityStack!!.empty()) {
             activity = activityStack!!.lastElement()
