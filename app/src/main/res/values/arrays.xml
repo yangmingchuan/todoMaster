@@ -3,10 +3,10 @@
 
     <!--  spring menu  -->
     <string-array name="type">
-        <item>Only</item>
-        <item>工作</item>
-        <item>学习</item>
-        <item>生活</item>
+        <item>  Only  One </item>
+        <item>  工作  </item>
+        <item>  学习  </item>
+        <item>  生活  </item>
     </string-array>
 
 </resources>

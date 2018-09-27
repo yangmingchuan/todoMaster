@@ -25,4 +25,11 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="SpinnerStyle">
+        <item name="android:textColor">@color/black_50</item>
+        <item name="colorAccent">@color/black_50</item>
+        <item name="colorControlNormal">@color/black_50</item> <!--改变了spinner的颜色  -->
+    </style>
+
+
 </resources>
