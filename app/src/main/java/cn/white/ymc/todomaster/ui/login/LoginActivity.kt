@@ -12,15 +12,36 @@ import cn.white.ymc.todomaster.base.BaseActivity
 
 class LoginActivity : BaseActivity() {
 
-
     override fun getLayoutId(): Int {
         return R.layout.activity_login
     }
 
+    /**
+     * 加载数据
+     */
     override fun initData() {
+
     }
 
+    /**
+     * 加载界面
+     */
     override fun initView() {
+
+    }
+
+    /**
+     * 登录按钮
+     */
+    fun login(){
+
+    }
+
+    /**
+     * 跳转注册
+     */
+    fun toRegister(){
+
     }
 
 }
