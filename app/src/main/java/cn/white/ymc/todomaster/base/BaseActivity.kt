@@ -1,7 +1,6 @@
 package cn.white.ymc.todomaster.base
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity
 import cn.white.ymc.todomaster.utils.davik.AppDavikActivityUtil
 
@@ -20,11 +19,9 @@ abstract class BaseActivity : AppCompatActivity() {
      */
     private val appDavikManager = AppDavikActivityUtil.instance
     var activity = this
-    /**
-     *  onCreate
-     */
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         setContentView(getLayoutId())
         appDavikManager.addActivity(this)
         initView()

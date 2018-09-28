@@ -1,32 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="cn.white.ymc.todomaster.ui.login.LoginActivity">
+    android:layout_height="match_parent">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
-        android:elevation="@dimen/dp_5"
+        android:elevation="@dimen/dp_6"
         tools:targetApi="lollipop" />
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/til_user"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dp_4">
+        android:layout_marginTop="?attr/actionBarSize"
+        android:orientation="vertical"
+        android:padding="@dimen/dp_30"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/et_user"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/til_user"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/activity_register_et_user" />
+            android:layout_marginTop="@dimen/dp_30"
+            android:layout_marginBottom="@dimen/dp_6">
 
-    </android.support.design.widget.TextInputLayout>
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/et_user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/activity_login_et_user" />
+        </android.support.design.widget.TextInputLayout>
 
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/til_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_6"
+            app:passwordToggleEnabled="true">
 
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/et_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/activity_login_et_password"
+                android:inputType="textPassword" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_20"
+            android:background="@drawable/button_ble_press"
+            android:onClick="login"
+            android:text="@string/activity_login_btn_login"
+            android:textColor="@color/white_255" />
+
+        <TextView
+            android:id="@+id/tv_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_20"
+            android:onClick="toRegister"
+            android:padding="8dp"
+            android:text="@string/activity_login_tv_register"
+            android:textColor="@color/black_90" />
+
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

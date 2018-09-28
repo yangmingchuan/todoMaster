@@ -1,6 +1,7 @@
-package cn.white.ymc.todomaster
+package cn.white.ymc.todomaster.ui
 
 import android.support.design.widget.BottomNavigationView
+import cn.white.ymc.todomaster.R
 import cn.white.ymc.todomaster.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
