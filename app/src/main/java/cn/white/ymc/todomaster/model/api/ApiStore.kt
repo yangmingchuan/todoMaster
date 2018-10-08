@@ -1,5 +1,7 @@
 package cn.white.ymc.todomaster.model.api
 
+import cn.white.ymc.todomaster.model.HttpLoggingInterceptor
+import cn.white.ymc.todomaster.model.cookie.CookiesManager
 import okhttp3.OkHttpClient
 
 /**
@@ -26,7 +28,8 @@ class ApiStore constructor() {
                     val requestBuilder = original.newBuilder()
                     val request = requestBuilder.build()
                     chain.proceed(request)
-                }
+                }.addInterceptor( HttpLoggingInterceptor())
+                .cookieJar( CookiesManager())
     }
 
 
