@@ -29,7 +29,7 @@ class ApiStore constructor() {
                     val request = requestBuilder.build()
                     chain.proceed(request)
                 }.addInterceptor( HttpLoggingInterceptor())
-                .cookieJar( CookiesManager())
+                .cookieJar()
     }
 
 
