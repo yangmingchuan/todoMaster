@@ -19,8 +19,8 @@ import java.io.*
 
 class LogcatHelper constructor(context: Context) {
 
-    private var pathLogcat: String? = null
-    private var mLogDumper: LogDumper? = null
+    private lateinit var pathLogcat: String
+    private lateinit var mLogDumper: LogDumper
     private var mPid: Int = 0
     var mcontext: Context? = context.applicationContext
 
@@ -38,9 +38,9 @@ class LogcatHelper constructor(context: Context) {
      */
     fun startLogThread() {
         if (mLogDumper != null) {
-            mLogDumper = LogDumper(mPid.toString(), pathLogcat!!)
+            mLogDumper = LogDumper(mPid.toString(), pathLogcat)
         }
-        mLogDumper!!.start()
+        mLogDumper.start()
     }
 
     /**
@@ -48,8 +48,7 @@ class LogcatHelper constructor(context: Context) {
      */
     fun stopLogThread() {
         if (mLogDumper != null) {
-            mLogDumper!!.stopLogs()
-            mLogDumper = null
+            mLogDumper.stopLogs()
         }
     }
 

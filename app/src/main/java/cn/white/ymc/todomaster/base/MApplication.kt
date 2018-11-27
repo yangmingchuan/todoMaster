@@ -6,6 +6,7 @@ import cn.white.ymc.todomaster.utils.cache.LogcatHelper
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 import com.orhanobut.logger.PrettyFormatStrategy
+import com.squareup.leakcanary.LeakCanary
 
 /**
  * application
@@ -50,6 +51,15 @@ class MApplication : Application() {
          *  crash 本地持久化
          */
         CrashHandler(this).instance.initCarsh()
+
+        /**
+         * LeakCanary初始化
+         */
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            return
+        }
+        LeakCanary.install(this)
+
     }
 
 
