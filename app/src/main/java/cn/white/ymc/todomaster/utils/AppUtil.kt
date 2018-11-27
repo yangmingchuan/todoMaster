@@ -26,14 +26,14 @@ var appTag: String = "todo"
  * 显示 短 toast
  *
  * apply 方法内 可以调用该对象的任意方法，并返回该对象
- * 如果左边不是空就返回左边，如果左右是空，则会继续走右边的 apply
+ * 如果左边不是空就返回左边，如果左右是空，则会走右边的 run
  */
-fun Context.toastS( msg: CharSequence) {
+fun Context.toast( msg: CharSequence) {
     if(isShow){
         ConstantUtil.toast?.apply {
             setText(msg)
             show()
-        }?:apply {
+        }?:run {
             Toast.makeText(this,msg,Toast.LENGTH_SHORT).apply {
                 ConstantUtil.toast = this
             }.show()
@@ -67,18 +67,9 @@ fun i(tag: String, msg: String) {
 }
 
 /**
- * log e
- */
-fun e(tag: String, msg: String) {
-    if (isDebug) {
-        Log.e(tag, msg)
-    }
-}
-
-/**
  * log todo e
  */
-fun e(msg: String) {
+fun loge(msg: String) {
     if (isDebug) {
         Log.e(appTag, msg)
     }
@@ -120,4 +111,10 @@ fun getDateEN(): String {
     var format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
     return format.format(Date(System.currentTimeMillis()))
 }
+
+/**
+ *  随机获取 颜色
+ * @return 16777215 is FFFFFF, 0 is 000000
+ */
+fun getRandomColor(): String = "#${Integer.toHexString((Math.random() * 16777215).toInt())}"
 
