@@ -4,8 +4,8 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
-    <color name="theme">#03A9F4</color>
-    <color name="theme_pressed">#44a7d4</color>
+    <color name="theme">#4DC5A0</color>
+    <color name="theme_pressed">#4dc58c</color>
     <!--文字-->
     <!--背景色-->
     <color name="transparent">#00000000</color>

@@ -45,7 +45,7 @@ class MApplication : Application() {
         /**
          * 打开log 持久化
          */
-        LogcatHelper(this).instance.startLogThread()
+        LogcatHelper(this).startLogThread()
 
         /**
          *  crash 本地持久化
@@ -61,7 +61,5 @@ class MApplication : Application() {
         LeakCanary.install(this)
 
     }
-
-
 
 }

@@ -2,7 +2,7 @@ package cn.white.ymc.todomaster.utils.cache
 
 import android.content.Context
 import android.os.Environment
-import cn.white.ymc.todomaster.utils.eLogger
+import cn.white.ymc.todomaster.utils.LoggerE
 import cn.white.ymc.todomaster.utils.getDateEN
 import cn.white.ymc.todomaster.utils.getDateTime
 import java.io.*
@@ -22,24 +22,15 @@ class LogcatHelper constructor(context: Context) {
     private lateinit var pathLogcat: String
     private lateinit var mLogDumper: LogDumper
     private var mPid: Int = 0
-    var mcontext: Context? = context.applicationContext
-
-    val instance: LogcatHelper by lazy {
-        LogcatHelper(mcontext!!)
-    }
-
-    init {
-        initLogcat(mcontext!!)
-        mPid = android.os.Process.myPid()
-    }
+    var mcontext: Context = context.applicationContext
 
     /**
      * 打开读取子线程
      */
     fun startLogThread() {
-        if (mLogDumper != null) {
-            mLogDumper = LogDumper(mPid.toString(), pathLogcat)
-        }
+        initLogcat(mcontext)
+        mPid = android.os.Process.myPid()
+        mLogDumper = LogDumper(mPid.toString(), pathLogcat)
         mLogDumper.start()
     }
 
@@ -47,9 +38,7 @@ class LogcatHelper constructor(context: Context) {
      * 停止 子线程
      */
     fun stopLogThread() {
-        if (mLogDumper != null) {
-            mLogDumper.stopLogs()
-        }
+        mLogDumper.stopLogs()
     }
 
     /**
@@ -57,14 +46,14 @@ class LogcatHelper constructor(context: Context) {
      * 初始化目录
      *
      */
-    fun initLogcat(context: Context) {
+    private fun initLogcat(context: Context) {
         // 优先保存到SD卡中
         if (Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED) {
             pathLogcat = Environment.getExternalStorageDirectory()
-                    .absolutePath + File.separator + "AWanAndroid-log"
+                    .absolutePath + File.separator + "todo-log"
         } else {// 如果SD卡不存在，就保存到本应用的目录下
             pathLogcat = (context.filesDir.absolutePath
-                    + File.separator + "AWanAndroid-log")
+                    + File.separator + "todo-log")
         }
         val file = File(pathLogcat)
         if (!file.exists()) {
@@ -87,13 +76,18 @@ class LogcatHelper constructor(context: Context) {
         var mRunning = true
         var mPID: String? = null
         var out: FileOutputStream? = null
+        var childFile = "todo-" + getDateTime() + ".log"
 
         /**
          * init 初始化块
          */
         init {
             mPID = pid
-            out = FileOutputStream(File(dir, "todo-" + getDateTime() + ".log"))
+            val file = File(dir+"/"+childFile)
+            if (!file.exists()) {
+                file.mkdirs()
+            }
+            out = FileOutputStream(File(dir, childFile))
         }
 
         /**
@@ -122,7 +116,7 @@ class LogcatHelper constructor(context: Context) {
                     }
                 }
             } catch (e: IOException) {
-                eLogger(e.localizedMessage)
+                LoggerE(e.localizedMessage)
             } finally {
                 if (mprocess != null) {
                     mprocess!!.destroy()

@@ -5,7 +5,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Environment
 import android.os.Process
-import cn.white.ymc.todomaster.utils.eLogger
+import cn.white.ymc.todomaster.utils.LoggerE
 import cn.white.ymc.todomaster.utils.getDateEN
 import java.io.*
 
@@ -20,17 +20,16 @@ import java.io.*
  */
 
 class CrashHandler constructor(context: Context) : Thread.UncaughtExceptionHandler {
-    var TAG: String = "CrashHandler"
     var DEBUG: Boolean = true
     val PATH: String = Environment.getExternalStorageDirectory().getPath() + "/todo/errLog/"
     val FILE_NAME: String = "crash"
     private val FILE_NAME_SUFFIX = ".trace"
     private var mExceptionHandler: Thread.UncaughtExceptionHandler? =
             Thread.getDefaultUncaughtExceptionHandler()
-    private var mContext: Context? = context.applicationContext
+    private var mContext: Context = context.applicationContext
 
     val instance: CrashHandler by lazy {
-        CrashHandler(mContext!!)
+        CrashHandler(mContext)
     }
 
     fun initCarsh() {
@@ -64,7 +63,7 @@ class CrashHandler constructor(context: Context) : Thread.UncaughtExceptionHandl
     private fun dumpExceptionToSDCard(e: Throwable?) {
         if(!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
             if(DEBUG){
-                eLogger("sdcard unmounted,skip dump exception")
+                LoggerE("sdcard unmounted,skip dump exception")
                 return
             }
         }
@@ -91,8 +90,8 @@ class CrashHandler constructor(context: Context) : Thread.UncaughtExceptionHandl
         /**
          *  应用的版本名称和版本号
          */
-        val pm = mContext!!.packageManager
-        val pi = pm.getPackageInfo(mContext!!.packageName, PackageManager.GET_ACTIVITIES)
+        val pm = mContext.packageManager
+        val pi = pm.getPackageInfo(mContext.packageName, PackageManager.GET_ACTIVITIES)
         pw.print("App Version: ")
         pw.print(pi.versionName)
         pw.print('_')
