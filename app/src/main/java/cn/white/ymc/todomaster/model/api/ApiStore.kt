@@ -1,7 +1,13 @@
 package cn.white.ymc.todomaster.model.api
 
+import cn.white.ymc.todomaster.model.HttpLoggingInterceptor
+import cn.white.ymc.todomaster.utils.ConstantUtil
+import cn.white.ymc.todomaster.utils.ConstantUtil.BASE_URL
+import cn.white.ymc.todomaster.utils.cache.PreferencesUtil
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.experimental.CoroutineCallAdapterFactory
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -25,14 +31,13 @@ object ApiStore {
     private const val SET_COOKIE_KEY = "set-cookie"
     private const val COOKIE_NAME = "Cookie"
 
-
     /**
      * 创建 OkHttp Client
      */
-    private fun create(): Retrofit{
+    private fun create(): Retrofit {
         val okHttpClientBuilder = OkHttpClient().newBuilder().apply {
-            connectTimeout(CONNECT_TIMEOUT,TimeUnit.SECONDS)
-            readTimeout(READ_TIMEOUT,TimeUnit.SECONDS)
+            connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
+            readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
             // 添加 cookie 本地持久化
             addInterceptor {
                 val request = it.request()
@@ -40,17 +45,47 @@ object ApiStore {
                 val requestUrl = request.url().toString()
                 val domain = request.url().host()
                 // 仅在登录注册 进行 cookie保存
-                if((requestUrl.contains(USER_LOGIN_URL)||requestUrl.contains(USER_REGISTER_URL)) &&
-                        !response.headers(SET_COOKIE_KEY).isEmpty()){
+                if ((requestUrl.contains(USER_LOGIN_URL) || requestUrl.contains(USER_REGISTER_URL)) &&
+                        !response.headers(SET_COOKIE_KEY).isEmpty()) {
                     val cookies = response.headers(SET_COOKIE_KEY)
                     val cookie = encodeCookie(cookies)
+                    saveCookie(requestUrl, domain, cookie)
                 }
-
                 response
             }
+            addInterceptor {
+                val request = it.request()
+                val builder = request.newBuilder()
+                val domain = request.url().host()
+                // get domain cookie
+                if (domain.isNotEmpty()) {
+                    val spDomain: String by PreferencesUtil(domain, "")
+                    val cookie: String = if (spDomain.isNotEmpty()) spDomain else ""
+                    if (cookie.isNotEmpty()) {
+                        builder.addHeader(COOKIE_NAME, cookie)
+                    }
+                }
+                it.proceed(builder.build())
+            }
+            // 添加log 打印
+            if (ConstantUtil.HAS_DEBUG) {
+                addInterceptor(HttpLoggingInterceptor())
+            }
         }
+        return Retrofit.Builder().baseUrl(BASE_URL).
+                client(okHttpClientBuilder.build())
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(CoroutineCallAdapterFactory())
+                .build()
+    }
 
-        return
+    /**
+     * 本地持久化 Cookie
+     */
+    private fun saveCookie(requestUrl: String, domain: String?, cookie: String) {
+        var spUrl: String by PreferencesUtil(requestUrl, cookie)
+        domain ?: return
+        var spDomain: String by PreferencesUtil(domain, cookie)
     }
 
     /**
@@ -75,7 +110,6 @@ object ApiStore {
         linkList.forEach {
             sb.append(it).append(";")
         }
-
         val last = sb.lastIndexOf(";")
         if (sb.length - 1 == last) {
             sb.deleteCharAt(last)

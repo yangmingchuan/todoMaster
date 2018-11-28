@@ -1,6 +1,6 @@
 package cn.white.ymc.todomaster.model
 
-import cn.white.ymc.todomaster.utils.eLogger
+import cn.white.ymc.todomaster.utils.LoggerE
 import okhttp3.Interceptor
 import okhttp3.Response
 import okio.Buffer
@@ -36,17 +36,15 @@ class HttpLoggingInterceptor : Interceptor {
             }
             body = buffer.readString(charset!!)
         }
-        eLogger("发送请求: method：" + request.method()
+        LoggerE("发送请求: method：" + request.method()
                 + "\nurl：" + request.url()
                 + "\n请求头：" + request.headers()
                 + "\n请求参数: " + body)
-
         val startNs = System.nanoTime()
         val response = chain.proceed(request)
         val tookMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNs)
-
         val responseBody = response.body()
-        var rBody: String?
+        var  rBody: String ?
 
         val source = responseBody!!.source()
         source.request(java.lang.Long.MAX_VALUE)
@@ -60,11 +58,10 @@ class HttpLoggingInterceptor : Interceptor {
             } catch (e: UnsupportedCharsetException) {
                 e.printStackTrace()
             }
-
         }
         rBody = buffer.clone().readString(charset!!)
 
-        eLogger("收到响应: code:" + response.code()
+        LoggerE("收到响应: code:" + response.code()
                 + "\n请求url：" + response.request().url()
                 + "\n请求body：" + body
                 + "\nResponse: " + rBody

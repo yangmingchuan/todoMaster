@@ -18,6 +18,10 @@ object ConstantUtil{
 
     var toast : Toast ?= null
 
+    var HAS_DEBUG = true
+
+    var isShow: Boolean = true
+
     /**
      * 访问网络 基础 url
      */
@@ -46,6 +50,8 @@ object ConstantUtil{
      * 用户相关 sp key
      */
     const val SP_FILE_NAME = "todo_sp_data"
+
+    const val TODO_TAG = "todo"
 
     const val USERNAME : String = "username"
     const val PASSWORD :String = "password"

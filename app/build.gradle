@@ -35,6 +35,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
+
     //log
     implementation 'com.orhanobut:logger:2.2.0'
     //rxjava rxandroid
@@ -47,6 +48,8 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-experimental-adapter:$retrofit2_converter_kotlin_coroutines_version"
+
     // glide
     implementation 'com.github.bumptech.glide:glide:4.8.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'

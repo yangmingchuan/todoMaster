@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
+import cn.white.ymc.todomaster.utils.ConstantUtil.TODO_TAG
+import cn.white.ymc.todomaster.utils.ConstantUtil.isShow
 import com.orhanobut.logger.Logger
 import java.text.SimpleDateFormat
 import java.util.*
@@ -17,10 +19,6 @@ import java.util.*
  * @author: ymc
  * @QQ:745612618
  */
-
-var isShow: Boolean = true
-var isDebug: Boolean = true
-var appTag: String = "todo"
 
 /**
  * 显示 短 toast
@@ -61,7 +59,7 @@ fun Context.ToastL(msg : CharSequence){
  * log i
  */
 fun i(tag: String, msg: String) {
-    if (isDebug) {
+    if (ConstantUtil.HAS_DEBUG) {
         Log.i(tag, msg)
     }
 }
@@ -70,16 +68,16 @@ fun i(tag: String, msg: String) {
  * log todo e
  */
 fun loge(msg: String) {
-    if (isDebug) {
-        Log.e(appTag, msg)
+    if (ConstantUtil.HAS_DEBUG) {
+        Log.e(TODO_TAG, msg)
     }
 }
 
 /**
  * logger e
  */
-fun eLogger(msg: String) {
-    if (isDebug) {
+fun LoggerE(msg: String) {
+    if (ConstantUtil.HAS_DEBUG) {
         Logger.e(msg)
     }
 }
@@ -87,8 +85,8 @@ fun eLogger(msg: String) {
 /**
  * logger w
  */
-fun wLogger(msg: String) {
-    if (isDebug) {
+fun LoggerW(msg: String) {
+    if (ConstantUtil.HAS_DEBUG) {
         Logger.w(msg)
     }
 }
@@ -115,6 +113,9 @@ fun getDateEN(): String {
 /**
  *  随机获取 颜色
  * @return 16777215 is FFFFFF, 0 is 000000
+ * 尽量跳过 白色区域
  */
-fun getRandomColor(): String = "#${Integer.toHexString((Math.random() * 16777215).toInt())}"
+fun getRandomColor(): String{
+   return "#${Integer.toHexString((Math.random() * 15777215 + 1000000).toInt())}"
+}
 
