@@ -21,7 +21,7 @@ import java.io.*
 
 class CrashHandler constructor(context: Context) : Thread.UncaughtExceptionHandler {
     var DEBUG: Boolean = true
-    val PATH: String = Environment.getExternalStorageDirectory().getPath() + "/todo/errLog/"
+    val PATH: String = Environment.getExternalStorageDirectory().getPath() + "/Atodo/errLog/"
     val FILE_NAME: String = "crash"
     private val FILE_NAME_SUFFIX = ".trace"
     private var mExceptionHandler: Thread.UncaughtExceptionHandler? =

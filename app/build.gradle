@@ -55,4 +55,6 @@ dependencies {
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakcanary_version"
     releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$leakcanary_version"
 
+    // permission
+    implementation "com.yanzhenjie:permission:$permission_version"
 }

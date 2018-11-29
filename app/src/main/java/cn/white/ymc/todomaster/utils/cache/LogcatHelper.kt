@@ -50,10 +50,10 @@ class LogcatHelper constructor(context: Context) {
         // 优先保存到SD卡中
         if (Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED) {
             pathLogcat = Environment.getExternalStorageDirectory()
-                    .absolutePath + File.separator + "todo-log"
+                    .absolutePath + File.separator + "Atodo-log"
         } else {// 如果SD卡不存在，就保存到本应用的目录下
             pathLogcat = (context.filesDir.absolutePath
-                    + File.separator + "todo-log")
+                    + File.separator + "Atodo-log")
         }
         val file = File(pathLogcat)
         if (!file.exists()) {
@@ -76,18 +76,19 @@ class LogcatHelper constructor(context: Context) {
         var mRunning = true
         var mPID: String? = null
         var out: FileOutputStream? = null
-        var childFile = "todo-" + getDateTime() + ".log"
 
         /**
          * init 初始化块
          */
         init {
             mPID = pid
-            val file = File(dir+"/"+childFile)
-            if (!file.exists()) {
-                file.mkdirs()
+            try {
+                out = FileOutputStream(File(dir, "todo-" + getDateTime() + ".log"))
+            } catch (e: FileNotFoundException) {
+                e.printStackTrace()
             }
-            out = FileOutputStream(File(dir, childFile))
+
+
         }
 
         /**
@@ -131,9 +132,7 @@ class LogcatHelper constructor(context: Context) {
                     out = null
                 }
             }
-
         }
-
     }
 
 }

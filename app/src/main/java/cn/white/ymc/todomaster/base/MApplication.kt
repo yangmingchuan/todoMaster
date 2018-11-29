@@ -1,5 +1,6 @@
 package cn.white.ymc.todomaster.base
 
+import android.Manifest
 import android.app.Application
 import cn.white.ymc.todomaster.utils.cache.CrashHandler
 import cn.white.ymc.todomaster.utils.cache.LogcatHelper
@@ -7,6 +8,7 @@ import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 import com.orhanobut.logger.PrettyFormatStrategy
 import com.squareup.leakcanary.LeakCanary
+import com.yanzhenjie.permission.AndPermission
 
 /**
  * application
@@ -20,6 +22,8 @@ import com.squareup.leakcanary.LeakCanary
 
 class MApplication : Application() {
 
+    private val sContext = this
+
     /**
      * 延迟 单例 初始化
      */
@@ -31,6 +35,7 @@ class MApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        requestPermission()
         /**
          *  logger 初始化
          */
@@ -59,7 +64,23 @@ class MApplication : Application() {
             return
         }
         LeakCanary.install(this)
+    }
 
+    private fun requestPermission() {
+        AndPermission.with(this)
+                .permission(Manifest.permission.READ_PHONE_STATE,
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION,
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                // 准备方法，和 okhttp 的拦截器一样，在请求权限之前先运行改方法，已经拥有权限不会触发该方法
+                .rationale({ context, permissions, executor -> executor.execute() })
+                .onDenied({ permissions ->
+                    if (AndPermission.hasAlwaysDeniedPermission(sContext, permissions)) {
+                        // 打开权限设置页
+                        AndPermission.permissionSetting(sContext).execute()
+                    }
+                }).start()
     }
 
 }
