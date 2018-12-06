@@ -37,15 +37,7 @@ class LoginActivity : BaseActivity() {
 
     }
 
-    /**
-     * 跳转注册
-     */
-    fun toRegister(){
-
-    }
-
     override fun onDestroy() {
-//        LogcatHelper(this).stopLogThread()
         super.onDestroy()
     }
 

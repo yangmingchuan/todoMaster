@@ -11,6 +11,8 @@
         android:layout_height="@dimen/dp_45"
         android:background="@color/theme"
         android:elevation="@dimen/dp_6"
+        app:titleTextColor="@color/white_255"
+        app:contentInsetStart="0dp"
         tools:targetApi="lollipop" />
 
     <LinearLayout
@@ -66,7 +68,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/dp_20"
                 android:layout_marginTop="@dimen/dp_20"
-                android:layout_margin="@dimen/dp_20"
+                android:layout_margin="@dimen/dp_5"
                 android:background="@drawable/button_ble_press"
                 android:onClick="register"
                 android:text="@string/activity_register_btn_register"
@@ -76,7 +78,7 @@
                 android:id="@+id/btn_login"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_margin="@dimen/dp_20"
+                android:layout_margin="@dimen/dp_5"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/dp_20"
                 android:layout_marginTop="@dimen/dp_20"

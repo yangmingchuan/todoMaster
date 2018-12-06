@@ -110,7 +110,7 @@ class LogcatHelper constructor(context: Context) {
                     }
                     if (line.isEmpty()) {
                         continue
-                    }
+                }
                     if (out != null && line.contains(mPID!!)) {
                         out!!.write((getDateEN() + "  " + line + "\n")
                                 .toByteArray())
