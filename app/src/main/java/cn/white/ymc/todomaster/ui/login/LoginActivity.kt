@@ -1,8 +1,10 @@
 package cn.white.ymc.todomaster.ui.login
 
+import android.view.View
 import cn.white.ymc.todomaster.R
 import cn.white.ymc.todomaster.base.BaseActivity
 import cn.white.ymc.todomaster.bean.LoginUserBean
+import kotlinx.android.synthetic.main.activity_login.*
 
 /**
  *  登录界面
@@ -12,6 +14,9 @@ import cn.white.ymc.todomaster.bean.LoginUserBean
  */
 
 class LoginActivity : BaseActivity(),LoginContract.View{
+
+    override fun cancelRequest() {
+    }
 
     override fun getLayoutId(): Int {
         return R.layout.activity_login
@@ -35,6 +40,13 @@ class LoginActivity : BaseActivity(),LoginContract.View{
      * 登录按钮
      */
     fun login(){
+
+    }
+
+    /**
+     * 注册
+     */
+    fun register(){
 
     }
 
@@ -67,6 +79,22 @@ class LoginActivity : BaseActivity(),LoginContract.View{
 
     override fun onDestroy() {
         super.onDestroy()
+    }
+
+    /**
+     * 检查 输入框内容
+     */
+    private fun checkEditText() : Boolean {
+        // 是否取消
+        var cancel = false
+        // 选中图片
+        var focusView: View? = null
+        et_user.error = null
+        et_password.error = null
+        val usernameText = et_user.text.toString().trim()
+        val pwdText = et_password.text.toString().trim()
+        return true
+
     }
 
 }

@@ -60,6 +60,11 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     /**
+     * cancel request
+     */
+    protected abstract fun cancelRequest()
+
+    /**
      *  获取 布局id
      */
     abstract fun getLayoutId(): Int
@@ -79,6 +84,7 @@ abstract class BaseActivity : AppCompatActivity() {
      */
     override fun onDestroy() {
         appDavikManager.removeActivity(this)
+        cancelRequest()
         super.onDestroy()
     }
 }

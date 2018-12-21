@@ -36,6 +36,7 @@
                 android:id="@+id/et_user"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:errorEnabled="true"
                 android:hint="@string/activity_login_et_user" />
         </android.support.design.widget.TextInputLayout>
 
