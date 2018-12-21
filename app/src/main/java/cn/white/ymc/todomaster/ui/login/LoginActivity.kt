@@ -1,5 +1,6 @@
 package cn.white.ymc.todomaster.ui.login
 
+import android.text.TextUtils
 import android.view.View
 import cn.white.ymc.todomaster.R
 import cn.white.ymc.todomaster.base.BaseActivity
@@ -93,6 +94,11 @@ class LoginActivity : BaseActivity(),LoginContract.View{
         et_password.error = null
         val usernameText = et_user.text.toString().trim()
         val pwdText = et_password.text.toString().trim()
+        if(TextUtils.isEmpty(pwdText)){
+            et_password.error = getString(R.string.password_not_empty)
+
+        }
+
         return true
 
     }
