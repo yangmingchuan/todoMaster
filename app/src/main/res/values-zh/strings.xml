@@ -4,17 +4,22 @@
     <string name="version_code">%1$s\n%2$s</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <!-- home -->
-    <string name="title_home">首页</string>
-    <string name="title_dashboard">知识体系</string>
-    <string name="hot_title">Hot</string>
+
+    <!-- Tab -->
+    <string name="title_completed">已完成</string>
+    <string name="title_undone">未完成</string>
+
     <!--no data-->
     <string name="no_data">这里空空的…</string>
     <string name="get_data_error">获取数据失败</string>
     <string name="get_data_zero">获取数据为空</string>
 
     <string name="double_click_exit">再按一次退出</string>
-
+    <!-- login -->
+    <string name="activity_login_et_user">用户</string>
+    <string name="activity_login_et_password">密码</string>
+    <string name="activity_register_btn_register">注册</string>
+    <string name="activity_login_btn_login">登录</string>
     <!-- search -->
     <string name="search_title">搜索</string>
     <string name="search_failed_not_article">未搜索到关键词相关文章</string>
@@ -65,7 +70,6 @@
         <h2>网站内容</h2>
         <p>\t\t本网站每天新增20~30篇优质文章，并加入到现有分类中，力求整理出一份优质而又详尽的知识体系，闲暇时间不妨上来学习下知识；除此以外，并为大家提供平时开发过程中常用的工具以及常用的网址导航。</p>
         <p>\t\t当然这只是我们目前的功能，未来我们将提供更多更加便捷的功能…</p>
-        <p>如果您有任何好的建议：</p>
             <ul>
                 <li>\t\t关于网站排版</li>
                 <li>\t\t关于新增常用网址以及工具</li>

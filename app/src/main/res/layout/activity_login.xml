@@ -16,6 +16,7 @@
         tools:targetApi="lollipop" />
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_50"
@@ -29,15 +30,15 @@
             android:id="@+id/til_user"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_30"
-            android:layout_marginBottom="@dimen/dp_6">
+            android:layout_marginBottom="@dimen/dp_6"
+            android:layout_marginTop="@dimen/dp_30">
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/et_user"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:errorEnabled="true"
-                android:hint="@string/activity_login_et_user" />
+                android:hint="@string/activity_login_et_user"
+                app:errorEnabled="true" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -65,11 +66,11 @@
             <Button
                 android:id="@+id/btn_register"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp_5"
                 android:layout_marginBottom="@dimen/dp_20"
                 android:layout_marginTop="@dimen/dp_20"
-                android:layout_margin="@dimen/dp_5"
+                android:layout_weight="1"
                 android:background="@drawable/button_ble_press"
                 android:onClick="register"
                 android:text="@string/activity_register_btn_register"
@@ -78,11 +79,11 @@
             <Button
                 android:id="@+id/btn_login"
                 android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_margin="@dimen/dp_5"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp_5"
                 android:layout_marginBottom="@dimen/dp_20"
                 android:layout_marginTop="@dimen/dp_20"
+                android:layout_weight="1"
                 android:background="@drawable/button_ble_press"
                 android:onClick="login"
                 android:text="@string/activity_login_btn_login"
@@ -91,5 +92,19 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/loginProgressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
 </android.support.constraint.ConstraintLayout>

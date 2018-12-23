@@ -41,7 +41,9 @@ class LoginActivity : BaseActivity(),LoginContract.View{
      * 登录按钮
      */
     fun login(){
+        if(checkEditText()){
 
+        }
     }
 
     /**
@@ -94,12 +96,17 @@ class LoginActivity : BaseActivity(),LoginContract.View{
         et_password.error = null
         val usernameText = et_user.text.toString().trim()
         val pwdText = et_password.text.toString().trim()
+        if(TextUtils.isEmpty(usernameText)){
+            et_user.error = getString(R.string.password_not_empty)
+        }
         if(TextUtils.isEmpty(pwdText)){
             et_password.error = getString(R.string.password_not_empty)
-
+            cancel = false
+        }else if(pwdText.length < 6){
+            et_password.error = getString(R.string.password_length_short)
+            cancel = false
         }
-
-        return true
+        return cancel
 
     }
 
