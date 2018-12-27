@@ -1,7 +1,10 @@
 package cn.white.ymc.todomaster.base
 
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.os.SystemClock
 import android.support.v4.view.ViewCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.View
@@ -87,4 +90,49 @@ abstract class BaseActivity : AppCompatActivity() {
         cancelRequest()
         super.onDestroy()
     }
+
+    /**
+     * 重写 界面跳转
+     * 进行重复点击检测
+     * [eg] startActivity 通过源码 最后也会调用 startActivityForResult
+     */
+    @SuppressLint("RestrictedApi")
+    override fun startActivityForResult(intent: Intent?, requestCode: Int, options: Bundle?) {
+        if (startActivitySelfCheck(intent!!)) {
+            super.startActivityForResult(intent, requestCode, options);
+        }
+    }
+
+    /**
+     * 添加 重复点击时间判断
+     *
+     */
+    private var mActivityJumpTag: String? = null
+    // 跳转事件
+    private var mActivityJumpTime: Long = 0
+
+    /**
+     * 判断Avtiviy 是否重复跳转
+     */
+    protected fun startActivitySelfCheck(intent : Intent):Boolean{
+        // 默认检查通过
+        var result = true
+        // 标记对象
+        val tag: String?
+        if (intent.component != null) { // 显式跳转
+            tag = intent.component.className
+        } else if (intent.action != null) { // 隐式跳转
+            tag = intent.action
+        } else {
+            return result
+        }
+        if (tag == mActivityJumpTag && mActivityJumpTime >= SystemClock.uptimeMillis() - 500) {
+            result = false
+        }
+        // 更新记录启动标记和时间
+        mActivityJumpTag = tag
+        mActivityJumpTime = SystemClock.uptimeMillis()
+        return result
+    }
+
 }
