@@ -16,8 +16,13 @@ import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : BaseActivity(),LoginContract.View{
 
+    /**
+     * 取消请求
+     */
     override fun cancelRequest() {
     }
+
+
 
     override fun getLayoutId(): Int {
         return R.layout.activity_login
@@ -38,7 +43,7 @@ class LoginActivity : BaseActivity(),LoginContract.View{
     }
 
     /**
-     * 登录按钮
+     * 登录事件
      */
     fun login(){
         if(checkEditText()){
@@ -47,10 +52,12 @@ class LoginActivity : BaseActivity(),LoginContract.View{
     }
 
     /**
-     * 注册
+     * 注册事件
      */
     fun register(){
+        if(checkEditText()){
 
+        }
     }
 
     override fun showLoading() {
@@ -80,7 +87,7 @@ class LoginActivity : BaseActivity(),LoginContract.View{
     override fun registerErr(info: String) {
     }
 
-    override fun onDestroy() {
+    public override fun onDestroy() {
         super.onDestroy()
     }
 
