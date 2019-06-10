@@ -2,11 +2,11 @@ package cn.white.ymc.todomaster.model.api
 
 import cn.white.ymc.todomaster.model.HttpLoggingInterceptor
 import cn.white.ymc.todomaster.utils.ConstantUtil
-import cn.white.ymc.todomaster.utils.ConstantUtil.BASE_URL
 import cn.white.ymc.todomaster.utils.cache.PreferencesUtil
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.experimental.CoroutineCallAdapterFactory
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -31,10 +31,13 @@ object ApiStore {
     private const val SET_COOKIE_KEY = "set-cookie"
     private const val COOKIE_NAME = "Cookie"
 
+    val instances: ApiServer =
+            ApiStore.create(ConstantUtil.BASE_URL).create(ApiServer::class.java)
+
     /**
      * 创建 OkHttp Client
      */
-    private fun create(): Retrofit {
+    fun create(url: String): Retrofit {
         val okHttpClientBuilder = OkHttpClient().newBuilder().apply {
             connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
             readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
@@ -72,10 +75,11 @@ object ApiStore {
                 addInterceptor(HttpLoggingInterceptor())
             }
         }
-        return Retrofit.Builder().baseUrl(BASE_URL).
+        return Retrofit.Builder().baseUrl(url).
                 client(okHttpClientBuilder.build())
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(CoroutineCallAdapterFactory())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()
     }
 

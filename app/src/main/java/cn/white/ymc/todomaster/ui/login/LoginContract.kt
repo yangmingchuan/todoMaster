@@ -2,7 +2,7 @@ package cn.white.ymc.todomaster.ui.login
 
 import cn.white.ymc.todomaster.base.contract.BasePresenter
 import cn.white.ymc.todomaster.base.contract.BaseView
-import cn.white.ymc.todomaster.bean.LoginUserBean
+import cn.white.ymc.todomaster.data.UserBean
 
 /**
  *  登录契约类
@@ -20,7 +20,7 @@ class LoginContract {
         /**
          * 登录成功
          */
-        fun loginOk(userInfo: LoginUserBean)
+        fun loginOk(userInfo: UserBean)
 
         /**
          * 登录失败
@@ -30,14 +30,13 @@ class LoginContract {
         /**
          * 注册成功
          */
-        fun registerSuccess(userInfo: LoginUserBean)
+        fun registerSuccess(userInfo: UserBean)
 
         /**
          * 注册失败
          */
         fun registerErr(info: String)
     }
-
 
     interface Presenter : BasePresenter<View> {
 

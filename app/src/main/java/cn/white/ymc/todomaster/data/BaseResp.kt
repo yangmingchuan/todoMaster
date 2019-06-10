@@ -9,6 +9,7 @@ package cn.white.ymc.todomaster.data
  * @author: ymc
  * @QQ:745612618
  */
+
 data class BaseResp<T>(
         val errorMsg: String,
         val errorCode: Int,

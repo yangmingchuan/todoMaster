@@ -25,7 +25,7 @@ object ConstantUtil{
     /**
      * 访问网络 基础 url
      */
-    const val BASE_URL : String = "http://www.wanandroid.com/"
+    const val BASE_URL : String = "https://www.wanandroid.com/"
 
     /**
      * ssl key

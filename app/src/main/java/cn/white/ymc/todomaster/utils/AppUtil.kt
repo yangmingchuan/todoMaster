@@ -41,6 +41,8 @@ fun Context.toast( msg: CharSequence) {
 
 /**
  * 显示 长 toast
+ *
+ * 对数据进行折叠
  */
 fun Context.ToastL(msg : CharSequence){
     if(isShow){
@@ -81,16 +83,6 @@ fun LoggerE(msg: String) {
         Logger.e(msg)
     }
 }
-
-/**
- * logger w
- */
-fun LoggerW(msg: String) {
-    if (ConstantUtil.HAS_DEBUG) {
-        Logger.w(msg)
-    }
-}
-
 
 /**
  * 获取时间

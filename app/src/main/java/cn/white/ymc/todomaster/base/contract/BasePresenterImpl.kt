@@ -10,7 +10,7 @@ package cn.white.ymc.todomaster.base.contract
  * @QQ:745612618
  */
 
-class BasePresenterImpl <T: BaseView> :BasePresenter<T>{
+open class BasePresenterImpl <T: BaseView> :BasePresenter<T>{
 
     private var mView: T? = null
 

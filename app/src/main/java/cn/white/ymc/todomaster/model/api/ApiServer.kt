@@ -24,6 +24,20 @@ interface ApiServer {
      */
     @FormUrlEncoded
     @POST("user/login")
-    fun login(@Field("username") username: String, @Field("password") password: String): Observable<BaseResp<UserBean>>
+    fun login(@Field("username") username: String,
+              @Field("password") password: String): Observable<BaseResp<UserBean>>
+
+    /**
+     * 注册
+     * @param username       用户名
+     * @param password       密码
+     * @param verifyPassword 验证密码
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("user/register")
+    fun register(@Field("username") username: String, @Field("password") password: String,
+                 @Field("repassword") verifyPassword: String): Observable<BaseResp<UserBean>>
+
 
 }

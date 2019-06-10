@@ -1,6 +1,7 @@
 package cn.white.ymc.todomaster.base
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -11,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
 import cn.white.ymc.todomaster.R
 import cn.white.ymc.todomaster.utils.davik.AppDavikActivityUtil
 
@@ -63,11 +65,6 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     /**
-     * cancel request
-     */
-    protected abstract fun cancelRequest()
-
-    /**
      *  获取 布局id
      */
     abstract fun getLayoutId(): Int
@@ -87,7 +84,8 @@ abstract class BaseActivity : AppCompatActivity() {
      */
     override fun onDestroy() {
         appDavikManager.removeActivity(this)
-        cancelRequest()
+//        取消请求
+//        cancelRequest()
         super.onDestroy()
     }
 
@@ -114,7 +112,7 @@ abstract class BaseActivity : AppCompatActivity() {
     /**
      * 判断Avtiviy 是否重复跳转
      */
-    protected fun startActivitySelfCheck(intent : Intent):Boolean{
+    private fun startActivitySelfCheck(intent : Intent):Boolean{
         // 默认检查通过
         var result = true
         // 标记对象
@@ -133,6 +131,29 @@ abstract class BaseActivity : AppCompatActivity() {
         mActivityJumpTag = tag
         mActivityJumpTime = SystemClock.uptimeMillis()
         return result
+    }
+
+    /**
+     * 隐藏键盘
+     */
+    protected fun hideKeyboard() {
+        currentFocus?.let {
+            (getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(it.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+        }
+    }
+
+    /**
+     * 禁止交互
+     */
+    protected fun disableInteraction() {
+        window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+    }
+
+    /**
+     * 允许交互
+     */
+    protected fun enableInteraction() {
+        window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
     }
 
 }

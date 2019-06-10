@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.Application
 import cn.white.ymc.todomaster.utils.cache.CrashHandler
 import cn.white.ymc.todomaster.utils.cache.LogcatHelper
+import cn.white.ymc.todomaster.utils.cache.PreferencesUtil
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 import com.orhanobut.logger.PrettyFormatStrategy
@@ -64,8 +65,13 @@ class MApplication : Application() {
             return
         }
         LeakCanary.install(this)
+
+        PreferencesUtil.attch(this)
     }
 
+    /**
+     * 动态申请权限
+     */
     private fun requestPermission() {
         AndPermission.with(this)
                 .permission(Manifest.permission.READ_PHONE_STATE,
