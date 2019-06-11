@@ -46,6 +46,7 @@
     <string name="login_login">登录</string>
     <string name="password_confirm_not_empty">确认密码不能为空</string>
     <string name="password_confirm_diff">确认密码不相同</string>
+    <string name="name_not_empty">用户不能为空</string>
     <string name="password_not_empty">密码不能为空</string>
     <string name="password_length_short">密码长度不能小于6位</string>
     <string name="username_not_empty">用户名不能为空</string>

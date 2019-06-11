@@ -52,7 +52,10 @@ object ApiStore {
                         !response.headers(SET_COOKIE_KEY).isEmpty()) {
                     val cookies = response.headers(SET_COOKIE_KEY)
                     val cookie = encodeCookie(cookies)
-                    saveCookie(requestUrl, domain, cookie)
+                    var spUrl : String by PreferencesUtil(requestUrl, cookie)
+                    var spDomain : String by  PreferencesUtil(domain, cookie)
+                    spUrl = cookie
+                    spDomain = cookie
                 }
                 response
             }
@@ -81,15 +84,6 @@ object ApiStore {
                 .addCallAdapterFactory(CoroutineCallAdapterFactory())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()
-    }
-
-    /**
-     * 本地持久化 Cookie
-     */
-    private fun saveCookie(requestUrl: String, domain: String?, cookie: String) {
-        var spUrl: String by PreferencesUtil(requestUrl, cookie)
-        domain ?: return
-        var spDomain: String by PreferencesUtil(domain, cookie)
     }
 
     /**

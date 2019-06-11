@@ -47,13 +47,13 @@ class PreferencesUtil<T> (private val key: String, private val value: T) :ReadWr
      * 多次使用到 preferences 我们可以使用with 抽出来
      */
     @Suppress("UNCHECKED_CAST")
-    private fun <T> findPreference(name: String, default: T): T {
+    private fun <T> findPreference(name: String, default: T): T = preferences.run {
         val res: Any = when (default){
-            is Long -> preferences.getLong(name,default)
-            is String -> preferences.getString(name, default)
-            is Int -> preferences.getInt(name, default)
-            is Boolean -> preferences.getBoolean(name, default)
-            is Float -> preferences.getFloat(name, default)
+            is Long -> getLong(name,default)
+            is String -> getString(name, default)
+            is Int -> getInt(name, default)
+            is Boolean -> getBoolean(name, default)
+            is Float -> getFloat(name, default)
             else -> throw IllegalArgumentException("get sp type error")
         }
         return res as T

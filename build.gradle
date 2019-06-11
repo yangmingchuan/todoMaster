@@ -16,6 +16,7 @@ ext.adapter_rxjava2_version = "2.3.0"
 ext.glide_version = "4.8.0"
 ext.leakcanary_version = "1.5.4"
 ext.permission_version = "2.0.0-rc4"
+ext.base_adapter_version = "2.9.40"
 
 buildscript {
 

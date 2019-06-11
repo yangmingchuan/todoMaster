@@ -95,6 +95,7 @@ class LoginActivity : BaseActivity(),LoginContract.View{
 
     override fun loginErr(info: String) {
         loginProgressBar.visibility = View.GONE
+        login = false
         if ("账号密码不匹配！" == info) {
             til_user.error = info
             til_password.error = info
@@ -104,12 +105,14 @@ class LoginActivity : BaseActivity(),LoginContract.View{
     }
 
     override fun registerSuccess(userInfo: UserBean) {
+        login = true
         loginProgressBar.visibility = View.GONE
         JumpUtil.overlay(this,MainActivity::class.java)
         finish()
     }
 
     override fun registerErr(info: String) {
+        login = false
         loginProgressBar.visibility = View.GONE
         LoggerE(info)
     }
@@ -122,10 +125,12 @@ class LoginActivity : BaseActivity(),LoginContract.View{
         var cancel = true
         et_user.error = null
         et_password.error = null
-        val usernameText = et_user.text.toString().trim()
-        val pwdText = et_password.text.toString().trim()
+        username = et_user.text.toString().trim()
+        password = et_password.text.toString().trim()
+        val usernameText = username
+        val pwdText = password
         if(TextUtils.isEmpty(usernameText)){
-            et_user.error = getString(R.string.password_not_empty)
+            et_user.error = getString(R.string.name_not_empty)
             return false
         }
         if(TextUtils.isEmpty(pwdText)){
