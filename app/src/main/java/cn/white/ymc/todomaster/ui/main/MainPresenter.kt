@@ -2,14 +2,18 @@ package cn.white.ymc.todomaster.ui.main
 
 import cn.white.ymc.todomaster.base.contract.BasePresenterImpl
 import cn.white.ymc.todomaster.data.BaseResp
+import cn.white.ymc.todomaster.data.ListResponse
 import cn.white.ymc.todomaster.model.api.ApiStore
 import cn.white.ymc.todomaster.utils.ConstantUtil
+import cn.white.ymc.todomaster.utils.LoggerE
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
 /**
+ * 首页 p层
+ *
  * @packageName: cn.white.ymc.todomaster.ui.main
  * @fileName: MainPresenter
  * @date: 2019/6/11  15:57
@@ -21,11 +25,63 @@ class MainPresenter(var view : MainContract.View) :
         BasePresenterImpl<MainContract.View>(),MainContract.Presenter{
 
     /**
-     * 获取
+     * 分页获取todo 数据
      */
-    override fun getTodoList() {
+    override fun getTodoList(type: Int , page: Int) {
+        ApiStore.instances.listDone(type,page).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { object : Observer<BaseResp<ListResponse>>{
+                    override fun onComplete() {
+                    }
+
+                    override fun onSubscribe(d: Disposable) {
+                    }
+
+                    override fun onNext(t: BaseResp<ListResponse>) {
+                        if(t.errorCode == ConstantUtil.REQUEST_SUCCESS){
+                            view.getListOk(t.data!!)
+                        }else if(t.errorCode==ConstantUtil.REQUEST_ERROR){
+                            view.getListErr(t.errorMsg)
+                        }
+                    }
+
+                    override fun onError(e: Throwable) {
+                        view.getListErr(e.message!!)
+                    }
+
+                } }
     }
 
+    /**
+     * 分页获取 未完成todo数据
+     */
+    override fun getUnTodoList(type: Int, page: Int) {
+        ApiStore.instances.listNotDo(type,page).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { object : Observer<BaseResp<ListResponse>>{
+                    override fun onComplete() {
+                        LoggerE("e")
+                    }
+
+                    override fun onSubscribe(d: Disposable) {
+                        LoggerE(d.toString())
+                    }
+
+                    override fun onNext(t: BaseResp<ListResponse>) {
+                        if(t.errorCode == ConstantUtil.REQUEST_SUCCESS){
+                            view.getListOk(t.data!!)
+                        }else if(t.errorCode==ConstantUtil.REQUEST_ERROR){
+                            view.getListErr(t.errorMsg)
+                        }
+                    }
+
+                    override fun onError(e: Throwable) {
+                        view.getListErr(e.message!!)
+                    }
+
+                } }
+
+    }
 
     /**
      * 删除todo

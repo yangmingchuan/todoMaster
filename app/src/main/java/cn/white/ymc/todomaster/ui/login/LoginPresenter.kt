@@ -20,7 +20,8 @@ import io.reactivex.schedulers.Schedulers
  * @QQ:745612618
  */
 
-class LoginPresenter(var view: LoginContract.View) : BasePresenterImpl<LoginContract.View>(), LoginContract.Presenter{
+class LoginPresenter(var view: LoginContract.View) :
+        BasePresenterImpl<LoginContract.View>(), LoginContract.Presenter{
 
     /**
      * 登录

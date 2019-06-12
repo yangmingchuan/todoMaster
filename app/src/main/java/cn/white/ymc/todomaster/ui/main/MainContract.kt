@@ -2,7 +2,7 @@ package cn.white.ymc.todomaster.ui.main
 
 import cn.white.ymc.todomaster.base.contract.BasePresenter
 import cn.white.ymc.todomaster.base.contract.BaseView
-import cn.white.ymc.todomaster.data.AllListResponse
+import cn.white.ymc.todomaster.data.ListResponse
 
 /**
  * 首页 契约类
@@ -28,9 +28,10 @@ class MainContract{
         /**
          * 获取 数据列表 是否成功
          */
-        fun getListOk(response : AllListResponse)
+        fun getListOk(response : ListResponse)
 
         fun getListErr(errMsg : String)
+
     }
 
 
@@ -44,7 +45,12 @@ class MainContract{
         /**
          * 获取todo 列表
          */
-        fun getTodoList()
+        fun getTodoList(type: Int , page: Int)
+
+        /**
+         * 获取 未完成todo 列表
+         */
+        fun getUnTodoList(type: Int , page: Int)
 
     }
 

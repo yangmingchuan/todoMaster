@@ -1,8 +1,7 @@
 package cn.white.ymc.todomaster.data
 
 /**
- * 作者：Created by WZ on 2018-08-10 10:10
- * 邮箱：1253427499@qq.com
+ * 列表数据集合
  */
 data class ListResponse(
         val curPage: Int,

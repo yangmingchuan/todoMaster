@@ -23,7 +23,6 @@ import java.util.concurrent.TimeUnit
 
 object ApiStore {
 
-    private const val TAG = "ApiStore"
     private const val CONNECT_TIMEOUT = 30L
     private const val READ_TIMEOUT = 15L
     private const val USER_LOGIN_URL = "user/login"

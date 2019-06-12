@@ -67,9 +67,9 @@ object ConstantUtil{
     val INTENT_NAME_TODODETAIL = "todoDetail"
     val BUNDLE_KEY_DONE = "done"
 
-    val TYPE_0 = 0 // 只用这一个
-    val TYPE_1 = 1 // 工作
-    val TYPE_2 = 2 // 学习
-    val TYPE_3 = 3 // 生活
+    val TYPE_ONE = 0 // 只用这一个
+    val TYPE_WORK = 1 // 工作
+    val TYPE_LEARN = 2 // 学习
+    val TYPE_LIFE = 3 // 生活
 
 }

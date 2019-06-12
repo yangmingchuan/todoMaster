@@ -87,12 +87,12 @@ class MainActivity : BaseActivity() {
                 return@setOnNavigationItemSelectedListener when(it.itemId){
                     R.id.navigation_home -> {
                         currentIndexId = R.id.navigation_home
-                        spinner.setSelection(doneFragment?.currentType ?: ConstantUtil.TYPE_0)
+                        spinner.setSelection(doneFragment?.currentType ?: ConstantUtil.TYPE_ONE)
                         true
                     }
                     R.id.navigation_dashboard -> {
                         currentIndexId = R.id.navigation_dashboard
-                        spinner.setSelection(notDoFragment?.currentType ?: ConstantUtil.TYPE_0)
+                        spinner.setSelection(notDoFragment?.currentType ?: ConstantUtil.TYPE_ONE)
                         true
                     }
                     else -> false

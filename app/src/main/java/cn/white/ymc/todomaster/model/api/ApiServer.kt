@@ -63,7 +63,7 @@ interface ApiServer {
      * @return
      */
     @GET("lg/todo/listdone/{type}/json/{page}")
-    fun getListDone(@Path("type") type: Int, @Path("page") page: Int):
+    fun listDone(@Path("type") type: Int, @Path("page") page: Int):
             Observable<BaseResp<ListResponse>>
 
     /**
@@ -73,7 +73,7 @@ interface ApiServer {
      * @return
      */
     @GET("lg/todo/listnotdo/{type}/json/{page}")
-    fun getListNotDo(@Path("type") type: Int, @Path("page") page: Int):
+    fun listNotDo(@Path("type") type: Int, @Path("page") page: Int):
             Observable<BaseResp<ListResponse>>
 
 }

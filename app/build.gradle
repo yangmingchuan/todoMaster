@@ -61,4 +61,7 @@ dependencies {
     // BRVAH
     implementation "com.github.CymChad:BaseRecyclerViewAdapterHelper:$base_adapter_version"
 
+    // AutoDispose
+    implementation 'com.uber.autodispose:autodispose-kotlin:0.8.0'
+    implementation 'com.uber.autodispose:autodispose-android-archcomponents-kotlin:0.8.0'
 }

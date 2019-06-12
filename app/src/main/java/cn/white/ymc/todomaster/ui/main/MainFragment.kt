@@ -1,5 +1,6 @@
 package cn.white.ymc.todomaster.ui.main
 
+import android.arch.lifecycle.Lifecycle
 import android.graphics.Canvas
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -10,7 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import cn.white.ymc.todomaster.R
-import cn.white.ymc.todomaster.data.AllListResponse
+import cn.white.ymc.todomaster.data.ListResponse
 import cn.white.ymc.todomaster.data.TodoDetail
 import cn.white.ymc.todomaster.utils.ConstantUtil
 import cn.white.ymc.todomaster.utils.TodoAdapter
@@ -36,7 +37,7 @@ class MainFragment : Fragment(),MainContract.View{
     private var DONE = false
 
     var currentPage = 1                // 当前页，从1开始
-    var currentType = ConstantUtil.TYPE_0    // 当前类型
+    var currentType = ConstantUtil.TYPE_ONE    // 当前类型
     var isOver = true                  // 是否结束（没有下一页）
 
     val data = ArrayList<TodoDetail>()
@@ -61,6 +62,7 @@ class MainFragment : Fragment(),MainContract.View{
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         DONE = arguments?.getBoolean(ConstantUtil.BUNDLE_KEY_DONE) ?: false
+        presenter = MainPresenter(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -70,7 +72,6 @@ class MainFragment : Fragment(),MainContract.View{
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        presenter = MainPresenter(this)
 
         rv.run {
             layoutManager = LinearLayoutManager(activity)
@@ -89,8 +90,29 @@ class MainFragment : Fragment(),MainContract.View{
             // 开启侧滑 并打开侧滑方法监听
             enableSwipeItem()
             setOnItemSwipeListener(onItemSwipeListener)
+
+            swipe_Refresh.setOnRefreshListener {
+                loadData()
+            }
+        }
+
+        loadData()
+    }
+
+
+    /**
+     * 加载数据
+     */
+    fun loadData(){
+        currentPage = 1
+        if (DONE) {
+            presenter.getTodoList(currentType,currentPage)
+        } else {
+            presenter.getUnTodoList(currentType,currentPage)
         }
     }
+
+
 
     /**
      * 侧滑方法监听
@@ -111,15 +133,6 @@ class MainFragment : Fragment(),MainContract.View{
         override fun onItemSwipeMoving(canvas: Canvas?, viewHolder: RecyclerView.ViewHolder?,
                                        dX: Float, dY: Float, isCurrentlyActive: Boolean) {
         }
-    }
-
-    /**
-     * 加载数据
-     */
-    fun loadData(){
-        currentPage = 1
-        presenter.getTodoList()
-        //todo 添加 分页加载信息
     }
 
 
@@ -156,10 +169,24 @@ class MainFragment : Fragment(),MainContract.View{
     /**
      * 获取数据 成功/失败
      */
-    override fun getListOk(response: AllListResponse) {
+    override fun getListOk(response: ListResponse) {
+        //设置可刷新
+        if (swipe_Refresh.isRefreshing) swipe_Refresh.isRefreshing = false
+        swipe_Refresh.isRefreshing = true
+        adapter.setEnableLoadMore(false)
+        adapter.run {
+            replaceData(response.datas)
+            isOver = response.over
+            if (!isOver) {
+                setEnableLoadMore(true)
+                currentPage++
+            }
+        }
     }
 
     override fun getListErr(errMsg: String) {
+
     }
+
 
 }
