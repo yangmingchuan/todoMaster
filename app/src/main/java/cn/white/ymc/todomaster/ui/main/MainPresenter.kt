@@ -30,14 +30,18 @@ class MainPresenter(var view : MainContract.View) :
     override fun getTodoList(type: Int , page: Int) {
         ApiStore.instances.listDone(type,page).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { object : Observer<BaseResp<ListResponse>>{
-                    override fun onComplete() {
+                .subscribe(object : Observer<BaseResp<ListResponse>>{
+                    override fun onSubscribe(d: Disposable) {
+                        LoggerE("onSubscribe")
                     }
 
-                    override fun onSubscribe(d: Disposable) {
+                    override fun onError(e: Throwable) {
+                        LoggerE("onError")
+                        view.getListErr(e.message!!)
                     }
 
                     override fun onNext(t: BaseResp<ListResponse>) {
+                        LoggerE("onNext")
                         if(t.errorCode == ConstantUtil.REQUEST_SUCCESS){
                             view.getListOk(t.data!!)
                         }else if(t.errorCode==ConstantUtil.REQUEST_ERROR){
@@ -45,11 +49,11 @@ class MainPresenter(var view : MainContract.View) :
                         }
                     }
 
-                    override fun onError(e: Throwable) {
-                        view.getListErr(e.message!!)
+                    override fun onComplete() {
+                        LoggerE("onComplete")
                     }
 
-                } }
+                })
     }
 
     /**

@@ -1,8 +1,11 @@
 package cn.white.ymc.todomaster.ui
 
+import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.ActionBarDrawerToggle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ImageView
@@ -166,9 +169,37 @@ class MainActivity : BaseActivity() {
         }.commit()
     }
 
+    /**
+     * 隐藏fragment
+     */
     private fun hideFragment(fragmentTransaction: FragmentTransaction) {
         fragmentTransaction.hide(doneFragment)
         fragmentTransaction.hide(notDoFragment)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        menu?.findItem(R.id.menu_add)?.isVisible = currentIndexId != R.id.navigation_home
+        invalidateOptionsMenu()
+        return super.onPrepareOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item?.itemId == R.id.menu_add) {
+//            startActivityForResult(Intent(this, AddActivity::class.java), Config.MAIN_ADD_REQUEST_CODE)
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    /**
+     * 界面返回 刷新布局
+     */
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
 }
