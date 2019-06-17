@@ -32,11 +32,9 @@ class MainPresenter(var view : MainContract.View) :
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(object : Observer<BaseResp<ListResponse>>{
                     override fun onSubscribe(d: Disposable) {
-                        LoggerE("onSubscribe")
                     }
 
                     override fun onError(e: Throwable) {
-                        LoggerE("onError")
                         view.getListErr(e.message!!)
                     }
 
@@ -50,7 +48,6 @@ class MainPresenter(var view : MainContract.View) :
                     }
 
                     override fun onComplete() {
-                        LoggerE("onComplete")
                     }
 
                 })
@@ -62,13 +59,11 @@ class MainPresenter(var view : MainContract.View) :
     override fun getUnTodoList(type: Int, page: Int) {
         ApiStore.instances.listNotDo(type,page).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { object : Observer<BaseResp<ListResponse>>{
+                .subscribe( object : Observer<BaseResp<ListResponse>>{
                     override fun onComplete() {
-                        LoggerE("e")
                     }
 
                     override fun onSubscribe(d: Disposable) {
-                        LoggerE(d.toString())
                     }
 
                     override fun onNext(t: BaseResp<ListResponse>) {
@@ -83,7 +78,7 @@ class MainPresenter(var view : MainContract.View) :
                         view.getListErr(e.message!!)
                     }
 
-                } }
+                } )
 
     }
 

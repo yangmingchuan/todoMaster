@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">todoMaster</string>
+    <string name="app_name">todo</string>
     <string name="title_completed">completed</string>
     <string name="title_undone">undone</string>
 

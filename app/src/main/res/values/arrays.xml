@@ -9,4 +9,13 @@
         <item>  生活  </item>
     </string-array>
 
+    <string-array name="notdo_options">
+        <item>更新状态</item>
+        <item>更新内容</item>
+    </string-array>
+
+    <string-array name="done_options">
+        <item>更新状态</item>
+    </string-array>
+
 </resources>

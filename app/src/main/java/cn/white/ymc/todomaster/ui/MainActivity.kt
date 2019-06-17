@@ -12,6 +12,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import cn.white.ymc.todomaster.R
 import cn.white.ymc.todomaster.base.BaseActivity
+import cn.white.ymc.todomaster.ui.add.AddActivity
 import cn.white.ymc.todomaster.ui.login.LoginActivity
 import cn.white.ymc.todomaster.ui.main.MainFragment
 import cn.white.ymc.todomaster.utils.ConstantUtil
@@ -190,7 +191,7 @@ class MainActivity : BaseActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         if (item?.itemId == R.id.menu_add) {
-//            startActivityForResult(Intent(this, AddActivity::class.java), Config.MAIN_ADD_REQUEST_CODE)
+            startActivityForResult(Intent(this, AddActivity::class.java), ConstantUtil.MAIN_ADD_REQUEST_CODE)
         }
         return super.onOptionsItemSelected(item)
     }

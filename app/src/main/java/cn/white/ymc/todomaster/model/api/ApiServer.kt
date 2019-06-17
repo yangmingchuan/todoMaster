@@ -1,9 +1,6 @@
 package cn.white.ymc.todomaster.model.api
 
-import cn.white.ymc.todomaster.data.AllListResponse
-import cn.white.ymc.todomaster.data.BaseResp
-import cn.white.ymc.todomaster.data.ListResponse
-import cn.white.ymc.todomaster.data.UserBean
+import cn.white.ymc.todomaster.data.*
 import io.reactivex.Observable
 import retrofit2.http.*
 
@@ -75,5 +72,20 @@ interface ApiServer {
     @GET("lg/todo/listnotdo/{type}/json/{page}")
     fun listNotDo(@Path("type") type: Int, @Path("page") page: Int):
             Observable<BaseResp<ListResponse>>
+
+    /**
+     * 新增一条Todo
+     * @param title
+     * @param content
+     * @param date
+     * @param type
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("lg/todo/add/json")
+    fun add(@Field("title") title: String, @Field("content") content: String,
+            @Field("date") date: String, @Field("type") type: Int):
+            Observable<BaseResp<TodoDetail>>
+
 
 }

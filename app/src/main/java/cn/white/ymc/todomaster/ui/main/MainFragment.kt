@@ -1,8 +1,9 @@
 package cn.white.ymc.todomaster.ui.main
 
-import android.arch.lifecycle.Lifecycle
+import android.content.Intent
 import android.graphics.Canvas
 import android.os.Bundle
+import android.support.design.widget.BottomSheetDialog
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -13,9 +14,12 @@ import android.view.ViewGroup
 import cn.white.ymc.todomaster.R
 import cn.white.ymc.todomaster.data.ListResponse
 import cn.white.ymc.todomaster.data.TodoDetail
+import cn.white.ymc.todomaster.ui.update.UpdateActivity
 import cn.white.ymc.todomaster.utils.ConstantUtil
 import cn.white.ymc.todomaster.utils.TodoAdapter
 import cn.white.ymc.todomaster.utils.toast
+import com.afollestad.materialdialogs.MaterialDialog
+import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.callback.ItemDragAndSwipeCallback
 import com.chad.library.adapter.base.listener.OnItemSwipeListener
 import kotlinx.android.synthetic.main.fragment.*
@@ -31,7 +35,7 @@ import kotlinx.android.synthetic.main.fragment.*
  * @QQ:745612618
  */
 
-class MainFragment : Fragment(),MainContract.View{
+class MainFragment : Fragment(), MainContract.View {
 
     // 是否 完成 状态
     private var DONE = false
@@ -46,7 +50,7 @@ class MainFragment : Fragment(),MainContract.View{
         TodoAdapter(data)
     }
 
-    lateinit var presenter : MainContract.Presenter
+    lateinit var presenter: MainContract.Presenter
 
     companion object {
 
@@ -80,7 +84,7 @@ class MainFragment : Fragment(),MainContract.View{
 
         adapter.run {
             bindToRecyclerView(rv)
-            setEmptyView(R.layout.fragment_empty,rv)
+            setEmptyView(R.layout.fragment_empty, rv)
 
             ItemDragAndSwipeCallback(this).run {
                 setSwipeMoveFlags(ItemTouchHelper.START)
@@ -94,30 +98,29 @@ class MainFragment : Fragment(),MainContract.View{
             swipe_Refresh.setOnRefreshListener {
                 loadData()
             }
-        }
 
+            // 点击事件
+            onItemClickListener = this@MainFragment.onItemClickListener
+        }
         loadData()
     }
-
 
     /**
      * 加载数据
      */
-    fun loadData(){
+    fun loadData() {
         currentPage = 1
         if (DONE) {
-            presenter.getTodoList(currentType,currentPage)
+            presenter.getTodoList(currentType, currentPage)
         } else {
-            presenter.getUnTodoList(currentType,currentPage)
+            presenter.getUnTodoList(currentType, currentPage)
         }
     }
-
-
 
     /**
      * 侧滑方法监听
      */
-    private val onItemSwipeListener = object : OnItemSwipeListener{
+    private val onItemSwipeListener = object : OnItemSwipeListener {
         override fun clearView(viewHolder: RecyclerView.ViewHolder?, pos: Int) {
         }
 
@@ -134,7 +137,6 @@ class MainFragment : Fragment(),MainContract.View{
                                        dX: Float, dY: Float, isCurrentlyActive: Boolean) {
         }
     }
-
 
     override fun showNormal() {
     }
@@ -154,7 +156,7 @@ class MainFragment : Fragment(),MainContract.View{
     override fun delectTodoOk(msg: String) {
         activity!!.toast(msg)
         // 刷新后一条数据
-        if (adapter.data.size > 1 && delectIndex >0) {
+        if (adapter.data.size > 1 && delectIndex > 0) {
             adapter.notifyItemChanged(delectIndex + 1)
         }
     }
@@ -172,7 +174,7 @@ class MainFragment : Fragment(),MainContract.View{
     override fun getListOk(response: ListResponse) {
         //设置可刷新
         if (swipe_Refresh.isRefreshing) swipe_Refresh.isRefreshing = false
-        swipe_Refresh.isRefreshing = true
+        swipe_Refresh.isRefreshing = false
         adapter.setEnableLoadMore(false)
         adapter.run {
             replaceData(response.datas)
@@ -185,7 +187,29 @@ class MainFragment : Fragment(),MainContract.View{
     }
 
     override fun getListErr(errMsg: String) {
+        swipe_Refresh.isRefreshing = false
+        adapter.setEnableLoadMore(false)
+        if (swipe_Refresh.isRefreshing) swipe_Refresh.isRefreshing = false
+    }
 
+    private val onItemClickListener = BaseQuickAdapter.OnItemClickListener { adapter, _, position ->
+        BottomSheetDialog(context!!)
+
+        val todoDetail = adapter.data[position] as TodoDetail
+
+        MaterialDialog.Builder(context!!)
+                .items(if (todoDetail.status == 0) R.array.notdo_options else R.array.done_options)
+                .title("请选择")
+                .itemsCallback { _, _, _, text ->
+                    if (text.contains("状态")) {
+
+                    } else {
+                        startActivityForResult(Intent(activity, UpdateActivity::class.java)
+                                .putExtra(ConstantUtil.INTENT_NAME_TODODETAIL, todoDetail)
+                                , ConstantUtil.MAIN_UPDATE_REQUEST_CODE)
+                    }
+                }
+                .show()
     }
 
 

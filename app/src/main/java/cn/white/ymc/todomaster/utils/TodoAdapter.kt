@@ -27,12 +27,12 @@ class TodoAdapter(data: List<TodoDetail>) :
                 .setText(R.id.tv_item_content, item.content)
                 .setText(R.id.tv_item_complete_date, "完成时间：${item.completeDateStr}")
 
-//        helper.getView<TextView>(R.id.tv_item_complete_date).visibility =
-//                if (item.dateStr == null) {
-//                    View.GONE
-//                } else {
-//                    View.VISIBLE
-//                }
+        helper.getView<TextView>(R.id.tv_item_complete_date).visibility =
+                if (item.dateStr.isEmpty()) {
+                    View.GONE
+                } else {
+                    View.VISIBLE
+                }
 
         // 当相邻两条记录为同一天时，隐藏后一条记录的日期
         helper.getView<TextView>(R.id.tv_item_date).visibility = if (helper.layoutPosition > 0) {

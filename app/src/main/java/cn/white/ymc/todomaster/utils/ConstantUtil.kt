@@ -17,7 +17,9 @@ import android.widget.Toast
 object ConstantUtil{
 
     var toast : Toast ?= null
-
+    /**
+     * 是否 在debug 模式
+     */
     var HAS_DEBUG = true
 
     var isShow: Boolean = true
@@ -71,5 +73,8 @@ object ConstantUtil{
     val TYPE_WORK = 1 // 工作
     val TYPE_LEARN = 2 // 学习
     val TYPE_LIFE = 3 // 生活
+
+    val MAIN_ADD_REQUEST_CODE = 100
+    val MAIN_UPDATE_REQUEST_CODE = 101
 
 }
