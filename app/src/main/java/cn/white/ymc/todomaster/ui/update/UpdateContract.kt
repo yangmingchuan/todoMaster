@@ -2,6 +2,8 @@ package cn.white.ymc.todomaster.ui.update
 
 import cn.white.ymc.todomaster.base.contract.BasePresenter
 import cn.white.ymc.todomaster.base.contract.BaseView
+import retrofit2.http.Field
+import retrofit2.http.Path
 
 /**
  * 更新todo 契约类
@@ -24,7 +26,10 @@ class UpdateContract{
 
     interface Presenter : BasePresenter<View>{
 
-        fun unpdateToDo()
+        /**
+         * 更新todo 信息
+         */
+        fun updateToDo(id: Int,title: String, content: String,date: String, status: Int, type: Int)
 
     }
 

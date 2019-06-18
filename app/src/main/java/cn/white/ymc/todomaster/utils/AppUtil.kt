@@ -40,24 +40,6 @@ fun Context.toast( msg: CharSequence) {
 }
 
 /**
- * 显示 长 toast
- *
- * 对数据进行折叠
- */
-fun Context.ToastL(msg : CharSequence){
-    if(isShow){
-        ConstantUtil.toast?.apply {
-            setText(msg)
-            show()
-        }?:apply {
-            Toast.makeText(this,msg,Toast.LENGTH_LONG).apply {
-                ConstantUtil.toast = this
-            }.show()
-        }
-    }
-}
-
-/**
  * log i
  */
 fun i(tag: String, msg: String) {

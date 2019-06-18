@@ -3,6 +3,7 @@ package cn.white.ymc.todomaster.ui.main
 import cn.white.ymc.todomaster.base.contract.BasePresenterImpl
 import cn.white.ymc.todomaster.data.BaseResp
 import cn.white.ymc.todomaster.data.ListResponse
+import cn.white.ymc.todomaster.data.TodoDetail
 import cn.white.ymc.todomaster.model.api.ApiStore
 import cn.white.ymc.todomaster.utils.ConstantUtil
 import cn.white.ymc.todomaster.utils.LoggerE
@@ -23,6 +24,32 @@ import io.reactivex.schedulers.Schedulers
 
 class MainPresenter(var view : MainContract.View) :
         BasePresenterImpl<MainContract.View>(),MainContract.Presenter{
+
+    /**
+     * 改变状态
+     */
+    override fun changeToDoState(id: Int, status: Int) {
+        ApiStore.instances.done(id,status).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Observer<BaseResp<TodoDetail>>{
+                    override fun onComplete() {
+                    }
+
+                    override fun onSubscribe(d: Disposable) {
+                    }
+
+                    override fun onNext(t: BaseResp<TodoDetail>) {
+                        view.changeStatusOk("更新状态成功！")
+                    }
+
+                    override fun onError(e: Throwable) {
+                        view.changeStatusErr(e.message!!)
+                    }
+
+                })
+
+
+    }
 
     /**
      * 分页获取todo 数据

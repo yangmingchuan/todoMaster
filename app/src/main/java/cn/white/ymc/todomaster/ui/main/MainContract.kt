@@ -32,6 +32,12 @@ class MainContract{
 
         fun getListErr(errMsg : String)
 
+        /**
+         * 改变状态成功
+         */
+        fun changeStatusOk(msg : String)
+        fun changeStatusErr(errMsg: String)
+
     }
 
 
@@ -51,6 +57,11 @@ class MainContract{
          * 获取 未完成todo 列表
          */
         fun getUnTodoList(type: Int , page: Int)
+
+        /**
+         * 更新状态
+         */
+        fun changeToDoState(id:Int , status : Int)
 
     }
 

@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import cn.white.ymc.todomaster.R
 import cn.white.ymc.todomaster.data.ListResponse
 import cn.white.ymc.todomaster.data.TodoDetail
+import cn.white.ymc.todomaster.ui.MainActivity
 import cn.white.ymc.todomaster.ui.update.UpdateActivity
 import cn.white.ymc.todomaster.utils.ConstantUtil
 import cn.white.ymc.todomaster.utils.TodoAdapter
@@ -46,6 +47,7 @@ class MainFragment : Fragment(), MainContract.View {
 
     val data = ArrayList<TodoDetail>()
     var delectIndex = -1
+
     private val adapter: TodoAdapter by lazy {
         TodoAdapter(data)
     }
@@ -192,6 +194,9 @@ class MainFragment : Fragment(), MainContract.View {
         if (swipe_Refresh.isRefreshing) swipe_Refresh.isRefreshing = false
     }
 
+    /**
+     * item 点击事件
+     */
     private val onItemClickListener = BaseQuickAdapter.OnItemClickListener { adapter, _, position ->
         BottomSheetDialog(context!!)
 
@@ -202,7 +207,8 @@ class MainFragment : Fragment(), MainContract.View {
                 .title("请选择")
                 .itemsCallback { _, _, _, text ->
                     if (text.contains("状态")) {
-
+                        delectIndex = position
+                        presenter.changeToDoState(todoDetail.id,if (todoDetail.status == 0) 1 else 0)
                     } else {
                         startActivityForResult(Intent(activity, UpdateActivity::class.java)
                                 .putExtra(ConstantUtil.INTENT_NAME_TODODETAIL, todoDetail)
@@ -210,6 +216,21 @@ class MainFragment : Fragment(), MainContract.View {
                     }
                 }
                 .show()
+    }
+
+    override fun changeStatusOk(msg: String) {
+        activity?.toast(msg)
+        adapter.remove(delectIndex)
+
+        // 将另一个fragment中的数据刷新
+        (activity as MainActivity).run {
+            notDoFragment?.loadData()
+            doneFragment?.loadData()
+        }
+    }
+
+    override fun changeStatusErr(errMsg: String) {
+        activity?.toast(errMsg)
     }
 
 

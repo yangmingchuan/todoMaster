@@ -87,5 +87,32 @@ interface ApiServer {
             @Field("date") date: String, @Field("type") type: Int):
             Observable<BaseResp<TodoDetail>>
 
+    /**
+     * 仅更新完成状态Todo
+     * @param id
+     * @param status
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("lg/todo/done/{id}/json")
+    fun done(@Path("id") id: Int, @Field("status") status: Int):
+            Observable<BaseResp<TodoDetail>>
+
+    /**
+     * 更新一条Todo内容
+     * @param id
+     * @param title
+     * @param content
+     * @param date
+     * @param status
+     * @param type
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("lg/todo/update/{id}/json")
+    fun update(@Path("id") id: Int, @Field("title") title: String,
+               @Field("content") content: String, @Field("date") date: String,
+               @Field("status") status: Int, @Field("type") type: Int):
+            Observable<BaseResp<TodoDetail>>
 
 }

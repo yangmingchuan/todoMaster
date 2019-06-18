@@ -11,6 +11,7 @@ import android.widget.AdapterView
 import android.widget.ImageView
 import android.widget.TextView
 import cn.white.ymc.todomaster.R
+import cn.white.ymc.todomaster.R.array.type
 import cn.white.ymc.todomaster.base.BaseActivity
 import cn.white.ymc.todomaster.ui.add.AddActivity
 import cn.white.ymc.todomaster.ui.login.LoginActivity
@@ -201,6 +202,26 @@ class MainActivity : BaseActivity() {
      */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        when(requestCode){
+            ConstantUtil.MAIN_ADD_REQUEST_CODE -> {
+                // 当在未完成Fragment中并且类型和添加类型相同时，刷新
+                if (currentIndexId == R.id.navigation_dashboard) {
+                    val type = data?.getIntExtra(ConstantUtil.INTENT_NAME_TYPE, 0) ?: ConstantUtil.TYPE_ONE
+                    notDoFragment?.run {
+                        if (type == currentType) {
+                            loadData()
+                        }
+                    }
+                }
+            }
+            ConstantUtil.MAIN_UPDATE_REQUEST_CODE -> {
+                if (currentIndexId == R.id.navigation_dashboard) {
+                    notDoFragment?.loadData()
+                }
+            }
+        }
+
+
     }
 
 }
